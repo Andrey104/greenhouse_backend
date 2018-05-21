@@ -16,3 +16,14 @@ class CRUModelViewSet(mixins.CreateModelMixin,
     ModelViewSet without DELETE.
     """
     pass
+
+
+def transaction_atomic(func):
+    def inner(*args, **kwargs):
+        try:
+            with transaction.atomic():
+                return func(*args, **kwargs)
+        except Exception as e:
+            raise ValidationError(dict(exception=e.__class__.__name__, detail=e))
+
+    return inner

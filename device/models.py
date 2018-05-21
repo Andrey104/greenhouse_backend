@@ -4,7 +4,7 @@ from django.db import models
 
 class MainDevice(models.Model):
     name = models.TextField(max_length=120)
-    device_code = models.TextField(max_length=6)
+    device_code = models.TextField(max_length=6, unique=True)
     description = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     last_sync = models.DateTimeField(null=True)
